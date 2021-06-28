@@ -1,0 +1,215 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "List APIs of VTP",
+        "title": "rest apis vtp",
+        "contact": {},
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/v1/billoflading/{id}": {
+            "get": {
+                "description": "Fecth van don hanh trinh",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "[fetch chitiet]"
+                ],
+                "summary": "Fetch van don hanh trinh",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/ginh.response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "meta": {
+                                            "allOf": [
+                                                {
+                                                    "$ref": "#/definitions/ginh.ResponseMeta"
+                                                },
+                                                {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "code": {
+                                                            "type": "integer"
+                                                        }
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/ginh.response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "meta": {
+                                            "allOf": [
+                                                {
+                                                    "$ref": "#/definitions/ginh.ResponseMeta"
+                                                },
+                                                {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "code": {
+                                                            "type": "integer"
+                                                        }
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Update trang thai don",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "[update status]"
+                ],
+                "summary": "Update trang thai don",
+                "parameters": [
+                    {
+                        "description": "Body message",
+                        "name": "Body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/rest.Trangthaivandon"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/ginh.response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "meta": {
+                                            "allOf": [
+                                                {
+                                                    "$ref": "#/definitions/ginh.ResponseMeta"
+                                                },
+                                                {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "code": {
+                                                            "type": "integer"
+                                                        }
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/ginh.response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "meta": {
+                                            "allOf": [
+                                                {
+                                                    "$ref": "#/definitions/ginh.ResponseMeta"
+                                                },
+                                                {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "code": {
+                                                            "type": "integer"
+                                                        }
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "ginh.ResponseMeta": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "object"
+                },
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "ginh.response": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "type": "object"
+                },
+                "meta": {
+                    "type": "object"
+                }
+            }
+        },
+        "rest.Trangthaivandon": {
+            "type": "object",
+            "properties": {
+                "dest_address": {
+                    "type": "string"
+                },
+                "dest_phone": {
+                    "type": "string"
+                },
+                "state": {
+                    "type": "string"
+                },
+                "time": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

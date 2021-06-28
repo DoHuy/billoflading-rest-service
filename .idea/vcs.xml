@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="VcsDirectoryMappings">
+    <mapping directory="$PROJECT_DIR$" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/vinid/account-auth-service" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/vinid/crawl-gitlab" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/vinid/custom-webhook-store-logs" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/vinid/custom-webhooks" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/vinid/custom-webhooksss" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/vinid/oauth2-identity-provider" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/vinid/src/github.com/beego/bee" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/vinid/src/github.com/beego/beego" vcs="Git" />
+  </component>
+</project>

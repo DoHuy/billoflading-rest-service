@@ -1,0 +1,117 @@
+definitions:
+  ginh.ResponseMeta:
+    properties:
+      code:
+        type: object
+      message:
+        type: string
+    type: object
+  ginh.response:
+    properties:
+      data:
+        type: object
+      meta:
+        type: object
+    type: object
+  rest.Trangthaivandon:
+    properties:
+      dest_address:
+        type: string
+      dest_phone:
+        type: string
+      state:
+        type: string
+      time:
+        type: string
+    type: object
+info:
+  contact: {}
+  description: List APIs of VTP
+  title: rest apis vtp
+  version: 1.0.0
+paths:
+  /api/v1/billoflading/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Fecth van don hanh trinh
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/ginh.response'
+            - properties:
+                meta:
+                  allOf:
+                  - $ref: '#/definitions/ginh.ResponseMeta'
+                  - properties:
+                      code:
+                        type: integer
+                    type: object
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/ginh.response'
+            - properties:
+                meta:
+                  allOf:
+                  - $ref: '#/definitions/ginh.ResponseMeta'
+                  - properties:
+                      code:
+                        type: integer
+                    type: object
+              type: object
+      summary: Fetch van don hanh trinh
+      tags:
+      - '[fetch chitiet]'
+    post:
+      consumes:
+      - application/json
+      description: Update trang thai don
+      parameters:
+      - description: Body message
+        in: body
+        name: Body
+        required: true
+        schema:
+          $ref: '#/definitions/rest.Trangthaivandon'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/ginh.response'
+            - properties:
+                meta:
+                  allOf:
+                  - $ref: '#/definitions/ginh.ResponseMeta'
+                  - properties:
+                      code:
+                        type: integer
+                    type: object
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/ginh.response'
+            - properties:
+                meta:
+                  allOf:
+                  - $ref: '#/definitions/ginh.ResponseMeta'
+                  - properties:
+                      code:
+                        type: integer
+                    type: object
+              type: object
+      summary: Update trang thai don
+      tags:
+      - '[update status]'
+swagger: "2.0"
