@@ -22,7 +22,7 @@ func ContextWithRequestMeta(ctx context.Context, ginCtx *gin.Context) context.Co
 
 func getRequestMeta(ginCtx *gin.Context) tracing.RequestMeta {
 	return tracing.RequestMeta{
-		URI:       ginCtx.Request.RequestURI,
-		Method:    ginCtx.Request.Method,
+		URI:    ginCtx.Request.RequestURI,
+		Method: ginCtx.Request.Method,
 	}
 }

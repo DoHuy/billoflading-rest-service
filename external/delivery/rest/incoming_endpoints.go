@@ -1,73 +1,73 @@
 package rest
 
 import (
-	"custom-webhook-store-logs/external/domain"
-	"custom-webhook-store-logs/packages/ginh"
+	"encoding/json"
+	"fmt"
 	"github.com/gin-gonic/gin"
+	"io/ioutil"
 	"net/http"
-	"time"
+	"vtp-apis/external/domain"
+	"vtp-apis/packages/ginh"
 )
 
-type CustomWebHooksExecutionSerializer struct {
-	HookExecution domain.DoSomethingWithLoggingFromAuth0UseCase
+type VNSaleExecutionSerializer struct {
+	vNSaleDomain domain.DoSomethingWithVNSale
 }
 
-func NewCustomWebHooksSerializer(uCase domain.DoSomethingWithLoggingFromAuth0UseCase) *CustomWebHooksExecutionSerializer {
-	return &CustomWebHooksExecutionSerializer{
-		HookExecution: uCase,
+func NewVNSaleSerializer(domain domain.DoSomethingWithVNSale) *VNSaleExecutionSerializer {
+	return &VNSaleExecutionSerializer{
+		vNSaleDomain: domain,
 	}
 }
 
-// @Summary Store log from auth0
-// @Description Hook store log from Auth0
-// @Tags [store logs]
-// @Accept json
+// @Summary Fetch van don hanh trinh
+// @Description Fecth van don hanh trinh
+// @Tags [fetch chitiet]
+// @Accept  json
 // @Produce json
-// @Param Body body rest.logsDTOReq true "Body message"
-// @Success 201 {object} ginh.response{meta=ginh.ResponseMeta{code=int}}
+// @Success 200 {object} ginh.response{meta=ginh.ResponseMeta{code=int}}
 // @failure 500 {object} ginh.response{meta=ginh.ResponseMeta{code=int}}
-// @Router /web-hooks/logs/incoming [post]
-func (s *CustomWebHooksExecutionSerializer) IncomingActivityLogsFromAuth0(ctx *gin.Context) {
-
-	logs, err := s.buildActivityLogDomainFromLogDTO(ctx)
+// @Router /api/v1/billoflading/{id} [get]
+func (s *VNSaleExecutionSerializer) FetchVandonhanhtrinhByID(ctx *gin.Context) {
+	//var mavandon string
+	mavandon := ctx.Param("id")
+	fmt.Println("mavandon", mavandon)
+	detailOrder, err := s.vNSaleDomain.FetchVandonhanhtrinh(ctx, mavandon)
 	if err != nil {
-		ginh.LogError(ctx, "parse log from request failed ", err)
+		ginh.LogError(ctx, "fetch failed ", err)
 		ginh.BuildErrorResponse(ctx, err, nil)
-		return
 	}
-	/*todo: save log to mysql */
-	if err := s.HookExecution.CacheActivityLogs(ctx, logs); err != nil {
-		ginh.LogError(ctx, "cache activity logs failed ", err)
-		ginh.BuildErrorResponse(ctx, err, nil)
-		return
-	}
-	ginh.LogInfo(ctx, "cache activity logs success ")
-	ginh.BuildSuccessResponse(ctx, http.StatusCreated, nil)
+	ginh.LogInfo(ctx, "fetch success ")
+	ginh.BuildSuccessResponse(ctx, http.StatusOK, detailOrder)
+	return
 }
 
-func (s *CustomWebHooksExecutionSerializer) buildActivityLogDomainFromLogDTO(ctx *gin.Context) ([]domain.ActivityLog, error) {
-	var logsDto logsDTOReq
-	var activityLogs []domain.ActivityLog
-	if err := ctx.ShouldBindJSON(&logsDto); err != nil {
-		return nil, err
+// @Summary Update trang thai don
+// @Description Update trang thai don
+// @Tags [update status]
+// @Accept  json
+// @Produce json
+// @Param Body body rest.Trangthaivandon true "Body message"
+// @Success 200 {object} ginh.response{meta=ginh.ResponseMeta{code=int}}
+// @failure 500 {object} ginh.response{meta=ginh.ResponseMeta{code=int}}
+// @Router /api/v1/billoflading/{id} [post]
+func (s *VNSaleExecutionSerializer) UpdateOrderStateByID(ctx *gin.Context) {
+	jsonData, err := ioutil.ReadAll(ctx.Request.Body)
+	if err != nil {
+		// Handle error
+		ginh.BuildErrorResponse(ctx, err, nil)
 	}
-	for _, log := range logsDto.Logs {
-		date, err := time.Parse(time.RFC3339, log.Data.Date)
-		if err != nil {
-			return nil, err
-		}
-		activityLogs = append(activityLogs, domain.ActivityLog{
-			LogID:       log.LogID,
-			Type:        log.Data.Type,
-			Description: log.Data.Description,
-			ClientID:    log.Data.ClientID,
-			ClientName:  log.Data.ClientName,
-			IP:          log.Data.IP,
-			UserAgent:   log.Data.UserAgent,
-			UserID:      log.Data.UserID,
-			Date:        &date,
-		})
+	//var mavandon string
+	mavandon, _ := ctx.GetQuery("id")
+	var jsonBody domain.Trangthaivandon
+	if err := json.Unmarshal(jsonData, &jsonBody); err != nil {
+		ginh.BuildErrorResponse(ctx, err, nil)
 	}
-	return activityLogs, nil
-
+	err = s.vNSaleDomain.UpdateOrderState(ctx, jsonBody, mavandon)
+	if err != nil {
+		ginh.LogError(ctx, "update failed ", err)
+		ginh.BuildErrorResponse(ctx, err, nil)
+	}
+	ginh.LogInfo(ctx, "update success")
+	ginh.BuildSuccessResponse(ctx, http.StatusOK, nil)
 }

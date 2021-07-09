@@ -14,17 +14,24 @@ type RunModeConfig struct {
 	RunMode string `envconfig:"RUN_MODE" required:"true"`
 }
 type ElasticConfig struct {
-	ElasticURI	string `envconfig:"ELASTIC_URI" required:"true"`
-
+	ElasticURI string `envconfig:"ELASTIC_URI" required:"true"`
 }
-func InitElasticClient(es ElasticConfig) (*elasticsearch.Client, error){
+type OracleConfig struct {
+	OracleURI string `envconfig:"ORACLE_URI" required:"true"`
+}
+
+func InitElasticClient(es ElasticConfig) (*elasticsearch.Client, error) {
 	addrs := strings.Split(es.ElasticURI, ",")
 	cfg := elasticsearch.Config{
 		Addresses: addrs,
 		Transport: &http.Transport{
-			MaxIdleConnsPerHost: 10,
+			MaxIdleConnsPerHost:   10,
 			ResponseHeaderTimeout: time.Second,
 		},
 	}
 	return elasticsearch.NewClient(cfg)
 }
+
+//func InitOracleClient(or OracleConfig) () {
+//
+//}

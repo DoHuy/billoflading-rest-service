@@ -2,9 +2,11 @@ package dao
 
 import (
 	"context"
-	"custom-webhook-store-logs/external/domain"
+	"vtp-apis/external/dao/models"
+	"vtp-apis/external/domain"
 )
 
-type WebHookLoggingDAO interface {
-	InsertLogs(ctx context.Context, activityLogs []domain.ActivityLog) error
+type DAO interface {
+	FetchByID(ctx context.Context, id int) (*models.Chitietdon, *models.Vandonhanhtrinh, error)
+	UpdateOrderStatus(ctx context.Context, state domain.Trangthaivandon) error
 }

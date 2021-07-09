@@ -6,7 +6,7 @@ import (
 
 	"go.uber.org/zap"
 
-	"custom-webhook-store-logs/packages/gconfig"
+	"vtp-apis/packages/gconfig"
 )
 
 var (

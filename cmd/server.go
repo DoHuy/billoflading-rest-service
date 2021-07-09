@@ -2,10 +2,9 @@ package main
 
 import (
 	"context"
-	"vtp-apis/cmd/config"
 	"errors"
 	"net/http"
-
+	"vtp-apis/cmd/config"
 	"vtp-apis/cmd/handler"
 	"vtp-apis/external/dao"
 	"vtp-apis/external/delivery/rest"
@@ -33,18 +32,18 @@ func initServer() *Server {
 
 	es, err := commonConf.InitElasticClient(conf.Elastic)
 	if err != nil {
-
+		panic(err)
 	}
-	webHookDAOGorm := dao.NewWebHookDAOGorm(es)
-
-	aRepo := repository.NewActivityLogRepository(*webHookDAOGorm)
-
-	uCase := usecase.NewCachingActivityLogUseCase(aRepo)
+	esDAO := dao.NewElasticsearchDAO(es)
+	esRepo := repository.NewESRepository(esDAO)
+	//or, err := commonConf.InitOracleClient(conf.Oracle)
+	//orDAO := dao.NewOracleDAO()
+	uCase := usecase.NewVNSaleUserCase(esRepo, nil)
 
 	ginHandler := handler.NewGin(&handler.GinDependencies{
-		RunMode:          conf.RunMode,
-		HealthCheck:      &ginh.BaseSerializer{},
-		WebHookSerialize: rest.NewCustomWebHooksSerializer(&uCase),
+		RunMode:         conf.RunMode,
+		HealthCheck:     &ginh.BaseSerializer{},
+		VNSaleSerialize: rest.NewVNSaleSerializer(uCase),
 	})
 
 	return &Server{

@@ -1,0 +1,5 @@
+{
+  "ELASTIC_URI": "http://localhost:9200",
+  "ORACLE_URI": "",
+  "RUN_MODE": "non_prod"
+}

@@ -19,9 +19,9 @@ import (
 )
 
 type GinDependencies struct {
-	RunMode          commonConf.RunModeConfig
-	HealthCheck      *ginh.BaseSerializer
-	WebHookSerialize *rest.CustomWebHooksExecutionSerializer
+	RunMode         commonConf.RunModeConfig
+	HealthCheck     *ginh.BaseSerializer
+	VNSaleSerialize *rest.VNSaleExecutionSerializer
 }
 
 func NewGin(deps *GinDependencies) *gin.Engine {
@@ -29,17 +29,18 @@ func NewGin(deps *GinDependencies) *gin.Engine {
 
 	h.Use(ginl.GinWithZap(zap.L(), time.RFC3339, true))
 
-	customHooks := h.Group("/web-hooks")
+	vnSaleRouters := h.Group("/api/v1")
 	{
-		health := customHooks.Group("/health")
+		health := vnSaleRouters.Group("/health")
 		{
 			health.GET("", deps.HealthCheck.Health)
 		}
 		if deps.RunMode.RunMode == constants.RunModeNonProduction {
 			fmt.Println("deps.RunMode.RunMode: ", deps.RunMode.RunMode)
-			customHooks.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+			vnSaleRouters.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 		}
-		customHooks.POST("/logs/incoming", deps.WebHookSerialize.IncomingActivityLogsFromAuth0)
+		vnSaleRouters.GET("/billoflading/:id", deps.VNSaleSerialize.FetchVandonhanhtrinhByID)
+		vnSaleRouters.POST("/billoflading/:id", deps.VNSaleSerialize.UpdateOrderStateByID)
 
 	}
 	return h

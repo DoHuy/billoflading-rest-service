@@ -4,7 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 
-	"custom-webhook-store-logs/packages/logger/zapl"
+	"vtp-apis/packages/logger/zapl"
 )
 
 func LogInfo(ctx *gin.Context, msg string, fields ...zap.Field) {

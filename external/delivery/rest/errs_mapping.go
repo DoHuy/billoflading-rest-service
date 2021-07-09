@@ -3,8 +3,8 @@ package rest
 import (
 	"net/http"
 
-	"custom-webhook-store-logs/packages/errs"
-	"custom-webhook-store-logs/packages/ginh"
+	"vtp-apis/packages/errs"
+	"vtp-apis/packages/ginh"
 )
 
 var (

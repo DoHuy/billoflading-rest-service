@@ -18,16 +18,15 @@ var doc = `{
     "info": {
         "description": "{{.Description}}",
         "title": "{{.Title}}",
-        "termsOfService": "https://vinid.net/dieu-khoan-dieu-kien",
         "contact": {},
         "version": "{{.Version}}"
     },
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/web-hooks/logs/incoming": {
-            "post": {
-                "description": "Hook store log from Auth0",
+        "/api/v1/billoflading/{id}": {
+            "get": {
+                "description": "Fecth van don hanh trinh",
                 "consumes": [
                     "application/json"
                 ],
@@ -35,9 +34,84 @@ var doc = `{
                     "application/json"
                 ],
                 "tags": [
-                    "[store logs]"
+                    "[fetch chitiet]"
                 ],
-                "summary": "Store log from auth0",
+                "summary": "Fetch van don hanh trinh",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/ginh.response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "meta": {
+                                            "allOf": [
+                                                {
+                                                    "$ref": "#/definitions/ginh.ResponseMeta"
+                                                },
+                                                {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "code": {
+                                                            "type": "integer"
+                                                        }
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/ginh.response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "meta": {
+                                            "allOf": [
+                                                {
+                                                    "$ref": "#/definitions/ginh.ResponseMeta"
+                                                },
+                                                {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "code": {
+                                                            "type": "integer"
+                                                        }
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Update trang thai don",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "[update status]"
+                ],
+                "summary": "Update trang thai don",
                 "parameters": [
                     {
                         "description": "Body message",
@@ -45,13 +119,13 @@ var doc = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/rest.logsDTOReq"
+                            "$ref": "#/definitions/rest.Trangthaivandon"
                         }
                     }
                 ],
                 "responses": {
-                    "201": {
-                        "description": "Created",
+                    "200": {
+                        "description": "OK",
                         "schema": {
                             "allOf": [
                                 {
@@ -137,77 +211,24 @@ var doc = `{
                 }
             }
         },
-        "rest.logDTO": {
+        "rest.Trangthaivandon": {
             "type": "object",
             "properties": {
-                "data": {
-                    "$ref": "#/definitions/rest.logData"
+                "dest_address": {
+                    "type": "string"
                 },
-                "log_id": {
+                "dest_phone": {
+                    "type": "string"
+                },
+                "state": {
+                    "type": "string"
+                },
+                "time": {
                     "type": "string"
                 }
             }
-        },
-        "rest.logData": {
-            "type": "object",
-            "properties": {
-                "client_id": {
-                    "type": "string"
-                },
-                "client_name": {
-                    "type": "string"
-                },
-                "date": {
-                    "type": "string"
-                },
-                "description": {
-                    "type": "string"
-                },
-                "ip": {
-                    "type": "string"
-                },
-                "log_id": {
-                    "type": "string"
-                },
-                "type": {
-                    "type": "string"
-                },
-                "user_agent": {
-                    "type": "string"
-                },
-                "user_id": {
-                    "type": "string"
-                }
-            }
-        },
-        "rest.logsDTOReq": {
-            "type": "object",
-            "properties": {
-                "logs": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/rest.logDTO"
-                    }
-                }
-            }
         }
-    },
-    "securityDefinitions": {
-        "ApiKeyAuth": {
-            "type": "apiKey",
-            "name": "Incoming endpoints auth0 web hooks",
-            "in": "header"
-        }
-    },
-    "tags": [
-        {
-            "name": "Response Code",
-            "externalDocs": {
-                "description": "Mapping table",
-                "url": "https://vinid-team.atlassian.net/wiki/spaces/IAM/pages/775645874/Authorization+response+code"
-            }
-        }
-    ]
+    }
 }`
 
 type swaggerInfo struct {
@@ -225,8 +246,8 @@ var SwaggerInfo = swaggerInfo{
 	Host:        "",
 	BasePath:    "",
 	Schemes:     []string{},
-	Title:       "incoming endpoints of custom auth0 web hooks",
-	Description: "List APIs of incoming endpoints of custom auth0 web hooks",
+	Title:       "rest apis vtp",
+	Description: "List APIs of VTP",
 }
 
 type s struct{}

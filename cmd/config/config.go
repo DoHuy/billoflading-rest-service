@@ -14,10 +14,12 @@ var (
 )
 
 type Conf struct {
-	RunMode 	commonConf.RunModeConfig
-	HTTP    	commonConf.HTTPConfig
-	Elastic	    commonConf.ElasticConfig
+	RunMode commonConf.RunModeConfig
+	HTTP    commonConf.HTTPConfig
+	Elastic commonConf.ElasticConfig
+	Oracle  commonConf.OracleConfig
 }
+
 func Config() *Conf {
 	once.Do(initConfig)
 	return &c
@@ -27,4 +29,5 @@ func initConfig() {
 	envconfig.MustProcess("", &c.RunMode)
 	envconfig.MustProcess("", &c.HTTP)
 	envconfig.MustProcess("", &c.Elastic)
+	envconfig.MustProcess("", &c.Oracle)
 }

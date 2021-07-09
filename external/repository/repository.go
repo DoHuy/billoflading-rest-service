@@ -2,39 +2,66 @@ package repository
 
 import (
 	"context"
-	"custom-webhook-store-logs/external/dao"
-	"custom-webhook-store-logs/external/dao/models"
-	"custom-webhook-store-logs/external/domain"
+	"encoding/json"
+	"fmt"
+	"vtp-apis/external/dao"
+	"vtp-apis/external/dao/models"
+	"vtp-apis/external/domain"
 )
 
-type ActivityLogRepository struct {
-	webHookDAO dao.WebHookDAOGorm
+type ElasticRepository struct {
+	esDAO dao.DAO
 }
 
-func NewActivityLogRepository(webHookDAO dao.WebHookDAOGorm) *ActivityLogRepository {
-	return &ActivityLogRepository{
-		webHookDAO: webHookDAO,
+func jsonToJson(obj1 interface{}, obj2 interface{}) error {
+	raw, err := json.Marshal(obj1)
+	if err != nil {
+		return err
+	}
+	if err := json.Unmarshal(raw, obj2); err != nil {
+		return err
+	}
+	return nil
+}
+
+func NewESRepository(dao dao.DAO) *ElasticRepository {
+	return &ElasticRepository{
+		esDAO: dao,
 	}
 }
 
-func (repo *ActivityLogRepository) extractResourceToModel(resources []domain.ActivityLog) []models.ActivityLog {
-	var activityLogs []models.ActivityLog
-	for _, resource := range resources {
-		activityLogs = append(activityLogs, models.ActivityLog{
-			LogID:       resource.LogID,
-			Type:        resource.Type,
-			Description: resource.Description,
-			ClientID:    resource.ClientID,
-			ClientName:  resource.ClientName,
-			IP:          resource.IP,
-			UserID:      resource.UserID,
-			UserAgent:   resource.UserAgent,
-			CreatedAt:   resource.Date,
-		})
+func (repo *ElasticRepository) extractModelToDomain(resources models.Chitietdon, vandon models.Vandonhanhtrinh) *domain.Chitietvandon {
+	return &domain.Chitietvandon{
+		ID:            vandon.OrderId,
+		ShipperID:     fmt.Sprintf("%v", resources.Employee),
+		SellerID:      resources.CusId,
+		PostID:        vandon.OrderPostId,
+		ProvinceID:    vandon.ProvinceCode,
+		DistrictID:    vandon.DistrictCode,
+		WardID:        vandon.WardsCode,
+		State:         vandon.OrderStatus,
+		Time:          resources.CreatedBy,
+		SourceAddress: vandon.ReceiverAddress,
+		SourcePhone:   vandon.ReceiverPhone,
+		DestPhone:     vandon.SenderPhone,
+		Noted:         vandon.OrderNote,
 	}
-	return activityLogs
 }
 
-func (repo *ActivityLogRepository) SaveLogs(ctx context.Context, logs []domain.ActivityLog) error {
-	return repo.webHookDAO.InsertLogs(ctx, repo.extractResourceToModel(logs))
+func (repo *ElasticRepository) FetchByID(ctx context.Context, id int) (*domain.Chitietvandon, error) {
+	chitietdon, vandonhanhtrinh, err := repo.esDAO.FetchByID(ctx, id)
+	if err != nil {
+		return nil, err
+	}
+	return repo.extractModelToDomain(*chitietdon, *vandonhanhtrinh), err
+}
+
+type OracleRepository struct {
+	oracleDAO dao.DAO
+}
+
+func NewOracleRepository(or *dao.OracleDAO) *OracleRepository {
+	return &OracleRepository{
+		oracleDAO: or,
+	}
 }
