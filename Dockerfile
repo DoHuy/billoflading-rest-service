@@ -11,7 +11,7 @@ RUN GOOS=linux GOARCH=amd64 go build -o main \
               -X '$PROJECT/packages/constants.CommitHashShort=$COMMIT_HASH_SHORT'"\
     ./cmd
 
-FROM golang:1.14.1
+FROM golang:1.14.1-alpine
 WORKDIR /app
 COPY --from=builder /app/main .
 EXPOSE 8080

@@ -22,8 +22,6 @@ doc:
 run:
 	@scripts/run.sh
 
-build_and_run: build
-	$(EXE_FILE)
 
 docker_build:
 	@docker build -t vtp-apis:$(COMMIT_HASH_SHORT) .
