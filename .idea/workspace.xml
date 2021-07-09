@@ -2,28 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ab82d047-f462-4ccc-9df8-88fe228525c3" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/scripts/run.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/scripts/scanner.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/scripts/swagger.sh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/config/config.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/config/config.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/handler/handler.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/handler/handler.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/server.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/server.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/external/dao/elastic.go" beforeDir="false" afterPath="$PROJECT_DIR$/external/dao/elastic.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/external/dao/models/models.go" beforeDir="false" afterPath="$PROJECT_DIR$/external/dao/models/models.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/external/dao/oracle.go" beforeDir="false" afterPath="$PROJECT_DIR$/external/dao/oracle.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/external/delivery/rest/dtos.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/external/delivery/rest/incoming_endpoints.go" beforeDir="false" afterPath="$PROJECT_DIR$/external/delivery/rest/incoming_endpoints.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/external/domain/vnsale_domain.go" beforeDir="false" afterPath="$PROJECT_DIR$/external/domain/vnsale_domain.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/external/repository/repository.go" beforeDir="false" afterPath="$PROJECT_DIR$/external/repository/repository.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/config/common.go" beforeDir="false" afterPath="$PROJECT_DIR$/packages/config/common.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/ginh/context.go" beforeDir="false" afterPath="$PROJECT_DIR$/packages/ginh/context.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/ginh/log.go" beforeDir="false" afterPath="$PROJECT_DIR$/packages/ginh/log.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/ginh/meta_data.go" beforeDir="false" afterPath="$PROJECT_DIR$/packages/ginh/meta_data.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/packages/utils/recover.go" beforeDir="false" afterPath="$PROJECT_DIR$/packages/utils/recover.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
