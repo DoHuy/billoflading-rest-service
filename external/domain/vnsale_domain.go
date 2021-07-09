@@ -14,13 +14,13 @@ type Chitietvandon struct {
 	ID            int         `json:"id"`
 	ShipperID     string      `json:"shipper_id"`
 	SellerID      interface{} `json:"seller_id"`
-	PostID        int      `json:"post_id"`
+	PostID        int         `json:"post_id"`
 	Post          string      `json:"post"`
 	ProvinceID    string      `json:"province_id"`
 	DistrictID    string      `json:"district_id"`
 	WardID        string      `json:"ward_id"`
-	State         int      `json:"state"`
-	Time          int  `json:"time"`
+	State         int         `json:"state"`
+	Time          int         `json:"time"`
 	SourceAddress string      `json:"source_address"`
 	DestAddress   string      `json:"dest_address"`
 	SourcePhone   string      `json:"source_phone"`

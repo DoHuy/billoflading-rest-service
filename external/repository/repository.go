@@ -32,20 +32,19 @@ func NewESRepository(dao dao.DAO) *ElasticRepository {
 
 func (repo *ElasticRepository) extractModelToDomain(resources models.Chitietdon, vandon models.Vandonhanhtrinh) *domain.Chitietvandon {
 	return &domain.Chitietvandon{
-		ID:        vandon.OrderId,
-		ShipperID: fmt.Sprintf("%v", resources.Employee),
-		SellerID:  resources.CusId,
-		PostID: vandon.OrderPostId,
-		ProvinceID: vandon.ProvinceCode,
-		DistrictID: vandon.DistrictCode,
-		WardID: vandon.WardsCode,
-		State: vandon.OrderStatus,
-		Time: resources.CreatedBy,
+		ID:            vandon.OrderId,
+		ShipperID:     fmt.Sprintf("%v", resources.Employee),
+		SellerID:      resources.CusId,
+		PostID:        vandon.OrderPostId,
+		ProvinceID:    vandon.ProvinceCode,
+		DistrictID:    vandon.DistrictCode,
+		WardID:        vandon.WardsCode,
+		State:         vandon.OrderStatus,
+		Time:          resources.CreatedBy,
 		SourceAddress: vandon.ReceiverAddress,
-		SourcePhone: vandon.ReceiverPhone,
-		DestPhone: vandon.SenderPhone,
-		Noted: vandon.OrderNote,
-
+		SourcePhone:   vandon.ReceiverPhone,
+		DestPhone:     vandon.SenderPhone,
+		Noted:         vandon.OrderNote,
 	}
 }
 

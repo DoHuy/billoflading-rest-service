@@ -7,8 +7,9 @@ COPY ./go.mod ./go.sum ./
 RUN go mod download
 COPY . .
 RUN GOOS=linux GOARCH=amd64 go build -o main \
-    -ldflags="-X '$PROJECT/packages/constants.ServiceCode=custom-webhooks'\
-              -X '$PROJECT/packages/constants.CommitHashShort=$COMMIT_HASH_SHORT'"
+    -ldflags="-X '$PROJECT/packages/constants.ServiceCode=$PROJECT'\
+              -X '$PROJECT/packages/constants.CommitHashShort=$COMMIT_HASH_SHORT'"\
+    ./cmd
 
 FROM golang:1.14.1
 WORKDIR /app

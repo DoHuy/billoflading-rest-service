@@ -13,11 +13,11 @@ clean:
 doc:
 	@scripts/swagger.sh
 
-build_for_mac:
-	@CGO_ENABLED=0 go build -ldflags "-X $(PROJECT)/pkg/constants.CommitHashShort=$(COMMIT_HASH_SHORT)" -o $(EXE_FILE) ./cmd
-
-build:
-	@CGO_ENABLED=0 GOOS=linux go build -ldflags "-X $(PROJECT)/pkg/constants.CommitHashShort=$(COMMIT_HASH_SHORT)" -o $(EXE_FILE) ./cmd
+#build_for_mac:
+#	@CGO_ENABLED=0 go build -ldflags "-X $(PROJECT)/pkg/constants.CommitHashShort=$(COMMIT_HASH_SHORT)" -o $(EXE_FILE) ./cmd
+#
+#build:
+#	@CGO_ENABLED=0 GOOS=linux go build -ldflags "-X $(PROJECT)/pkg/constants.CommitHashShort=$(COMMIT_HASH_SHORT)" -o $(EXE_FILE) ./cmd
 
 run:
 	@scripts/run.sh
@@ -29,7 +29,7 @@ docker_build:
 	@docker build -t vtp-apis:$(COMMIT_HASH_SHORT) .
 
 docker_run:
-	@docker run -p ${container_port}:${port} vtp-apis:$(COMMIT_HASH_SHORT)
+	@docker run -p 8080:8080 vtp-apis:$(COMMIT_HASH_SHORT)
 
 # format all dependencies
 fmt:
